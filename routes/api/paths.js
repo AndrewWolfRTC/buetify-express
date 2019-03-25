@@ -1,5 +1,6 @@
 const express = require('express');
 const mongodb = require('mongodb');
+var Paths = require('../../models/paths');
 const router = express.Router();
 
 /* GET paths. */
@@ -27,6 +28,20 @@ router.delete('/:id', async (req, res, next) => {
     console.log('req.params.id', req.params.id);
     await paths.deleteOne({_id: new mongodb.ObjectID(req.params.id)});
     res.status(200).send();
+});
+
+router.patch('/:id', async (req, res, next) => {
+    //const paths = await loadPathsCollection();
+    let paths = {
+        name: req.body.name,
+        title: req.body.title,
+        description: req.body.description,
+        data: req.body.data,
+        updated_at: new Date()
+    };
+    Paths.findOneAndUpdate({_id: new mongodb.ObjectID(req.params.id)}, paths, { upsert: true }, function (err, path) {
+        res.status(200).send();
+    });
 });
 
 async function loadPathsCollection() {
