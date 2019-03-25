@@ -3,13 +3,11 @@ const mongodb = require('mongodb');
 var Paths = require('../../models/paths');
 const router = express.Router();
 
-/* GET paths. */
 router.get('/', async (req, res, next) => {
     const paths = await loadPathsCollection();
     res.send(await paths.find({}).toArray());
 });
 
-/* POST new path. */
 router.post('/', async (req, res, next) => {
     const paths = await loadPathsCollection();
     await paths.insertOne({
@@ -25,13 +23,11 @@ router.post('/', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
     const paths = await loadPathsCollection();
-    console.log('req.params.id', req.params.id);
     await paths.deleteOne({_id: new mongodb.ObjectID(req.params.id)});
     res.status(200).send();
 });
 
 router.patch('/:id', async (req, res, next) => {
-    //const paths = await loadPathsCollection();
     let paths = {
         name: req.body.name,
         title: req.body.title,
