@@ -7,7 +7,7 @@ function fetchPageData (blocksRes) {
 async function fetchBlockData (blocksRes) {
     var result = await Blocks.find({}, 'data').where('name').in(blocksRes)
     var blocks = result.map(function (c) {
-        var data = JSON.parse(c.data.toObject());
+        var data = JSON.parse(c.data);
         //recursion if needed
         return data;
     });
@@ -31,7 +31,7 @@ exports.index = async function(req, res, next) {
     var blocks = await fetchPageData(blocksRes);
 
     let convertedBlocks = blocks.map(function (c) {
-        return JSON.parse(c.data.toObject());;
+        return JSON.parse(c.data);
     });
 
     for (block in convertedBlocks) {

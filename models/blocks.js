@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var BlocksSchema = new Schema(
   {
     name: {type: String, required: true, max: 100},
-    data: {myJsonProperty: Object},
+    data: {type: String},
     created_at: {type: Date},
     updated_at: {type: Date},
     deleted_at: {type: Date}
