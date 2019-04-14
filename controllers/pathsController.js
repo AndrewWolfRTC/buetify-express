@@ -4,7 +4,7 @@ const fsPromises = require('fs').promises
 const manifestPath = `${process.cwd()}/public/manifest.json`;
 
 function fetchPageData (blocksRes) {
-    return Blocks.find({}, 'data').where('name').in(blocksRes)
+    return Blocks.find({}, 'data').where('name').in(blocksRes).sort('order')
 }
 
 async function fetchBlockData (blocksRes) {
